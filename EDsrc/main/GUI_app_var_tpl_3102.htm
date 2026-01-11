@@ -1,0 +1,39 @@
+// --- SYSTEM (Hier brauchen wir feste IDs fuer den Core) ---
+0  | sys_ver    | 3102     | System | -
+   | range_user | 31-99    | Range  | UserData
+2  | 300
+3  | 500
+
+// --- SETTINGS (Colors start at 20) ---
+20 | c_bg       | #1e1e1e  | Color  | -
+   | c_fg       | #cccccc  | Color  | -
+27 | c_btn      | #3e3e42  | Color  | -
+   | f_main     | Segoe UI | Font   | -
+   | win_geom   | 650x700  | String | -
+
+// --- DATA (Startet bei 31, damit die Referenzen unten stimmen!) ---
+31 | r_m4_d_in  | D:/p1/s0         | - | -
+   | r_m4_d_out | D:/p1/out        | - | -
+   | r_m5_f_in  | D:/p1/archiv.txt | - | -
+   | r_m5_f_out | D:/p1/target.zip | - | -
+
+// --- GUI LAYOUT (Wir starten bei 100) ---
+100 | settings  | - | SettingsManager | -
+    | idx_view  | - | IdxManager      | -
+
+// Header (Autom. ID 102)
+    | head_mod1 | MOD 1 (Unpack) | SysBtn | #00ffff
+
+// Inputs (Verweisen auf 31 und 33 - siehe oben!)
+    | lbl_src   | Source Tree    | EditDirEx  | 31
+    | lbl_arc   | Archive File   | EditFileEx | 33
+
+// Action (Autom. ID 105)
+    | run_mod1  | EXECUTE MOD 1  | SysBtn     | #ff00ff
+
+// Debug (Autom. ID 106...)
+    | dbg_head  | STATUS: Ready  | Header     | -
+    | dbg_view  | -              | DebugBox   | -
+
+// EOF
+999 | END | - | END | -
