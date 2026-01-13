@@ -12,38 +12,15 @@ SCRIPT_NAME = f"p{AI_ID}.py"
 INFILE = "Gtst.htm"
 OUTFILE = f"P{AI_ID}.htm"
 OUTFILEPDAT = f"pDAT{AI_ID}.htm"
+
+
 # Debug-Schalter. Setze auf True für detaillierte Ausgaben, sonst False.
 DEBUG = True
-debgg = DEBUG
-
-DELIMITERS = ['.', ',', '|', ';']
-VALID_STEPS = {'step2': 2, 'step4': 4, 'step5': 5, 'step8': 8, 'step10': 10, 'step16': 16}
-COMMENT_MARKERS = ['<!--', '-->', '//', ';', '#cs', '#ce', '#', 'rem', '/*', '*/']         #   ';', '#cs', '#ce' is comment in autoit 
-#   ';', '#cs', '#ce' is comment in autoit 
-    
-
-
 
 # --- Konfiguration der Parser-Regeln ---
 DELIMITERS = ['.', ',', '|', ';']
 VALID_STEPS = {'step2': 2, 'step4': 4, 'step5': 5, 'step8': 8, 'step10': 10, 'step16': 16}
 DEFAULT_STEP = 5
-
-
-
-
-'''
-# --from p4.py ----------------------------------------
-
-# das ist nicht die vollstaendige regel rule
-        if line.startswith('//'):
-            pattern = r'^\/\/\s*\d+\s*' + delimiter_class
-            # ...
-            
-        now fixed:
-'''
-
-
 
 def parse_config_file():
     try:
@@ -61,66 +38,16 @@ def parse_config_file():
 
     if DEBUG: print(f"--- Starte Verarbeitung von {INFILE} mit {len(lines)} Zeilen ---")
 
-
-
-            
-
-
-
-
     for line_num, original_line in enumerate(lines):
         line = original_line.strip()
-        
-        # --- Comment Handling ---
-        # --from p4.py ----------------------------------------
-        is_comment = False
-        work_line = line        
-        
         if not line:
             continue
-            
-
-
-
-        
-        # Check for any comment marker at start
-        # ident error::
-        for marker in COMMENT_MARKERS:
-            if line.startswith(marker):
-                is_comment = True
-                # Remove comment marker
-                work_line = line[len(marker):].strip()
-                
-                # Check if index number is DIRECTLY after comment marker
-                if not work_line or not work_line[0].isdigit():
-                    if debgg:
-                        print(f"Line {line_num}: Skipped (comment '{marker}' without direct index number)")
-                    work_line = None
-                    break
-                
-                if debgg:
-                    print(f"Line {line_num}: Valid comment with '{marker}' + index")
-                break
-        
-        # Skip if comment was invalid
-        if work_line is None:
-            continue
-
-
-# --from p4.py end----------------------------------------
-
-
-
 
         if line.startswith('//'):
             pattern = r'^\/\/\s*\d+\s*' + delimiter_class
-            # but:  COMMENT_MARKERS = ['<!--', '-->', '//', ';', '#cs', '#ce', '#', 'rem', '/*', '*/']         #   ';', '#cs', '#ce' is comment in autoit 
-            
             if not re.match(pattern, line):
                 if DEBUG: print(f"Zeile {line_num+1}: Ignoriert (reiner Kommentar). Inhalt: '{line}'")
                 continue
-
-
 
         delimiter, d_pos = None, -1
         match = re.search(delimiter_class, line[:20])
@@ -403,8 +330,7 @@ if __name__ == '__main__':
     #   out result_array
     #
     write_output_file(result_array)
-    compare_files("P4.htm","P2.htm")
-    print(f"--- {SCRIPT_NAME} . parse_config_file()  and compare_files(P4.htm,P2.htm) done ---")
+    print(f"--- {SCRIPT_NAME} beendet ---")
     
     # Nach write_output_file() oder am Ende von parse_config()
     subprocess.run(["notepad++", OUTFILE])

@@ -1,4 +1,4 @@
-	py  p3.py
+	py  p2.py
 
 pause
 exit
