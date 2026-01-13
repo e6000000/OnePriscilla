@@ -1,0 +1,17 @@
+# <pre>
+// ---  SAVED CONFIG   ---  0 | step5 | 5 | | | 
+// lines mit (1)comment werden nur weiter geparst geprueft wenn : (2)index number direct nach (3)comment AND  dann (4)delimiter   AND  dann (5)key 
+// kein index direct nach comment ignore line
+// ID | not_valid_line_key     kein index direct nach comment ignore line
+// ID   | KEY         | val1   | KEY2   | KEY3  |  KEY4 
+// ID   | KEY         | val1   | val2   | val3  |  val4 
+0 | step | step5      |  5     |0       |0      |0|0|0|    easy: 0,step ,step5 ,,,,
+-->1     | range_user5 | 31-99  |1       |1      |1  | 1 | <!--      
+<!--2    , c_bg_10       ,#320a2b ,Color    , 2    ,2,2,2,2,2,
+-->3     | dbgg15       | 1      | c_fg    | #cccccc | Color  | 3  |3 | 3 | 3 | 3  | | | | 5 comment /***/
+/* 4.      c_btn20      .#3e3e42 .Color    . 4    .4.4.4.4.4.4.4.
+,key_ohne_index ohne comment25 , Segoe UI , Font , -   , index 5*5= 25 wird fuer key berechnet    comment /***/
+# 6.key6__30__  .6.6.6.6.6.6.6.6.....
+//,key7,,,7,7,,,7,7,7,,,    must ignore , kein index   direct nach comment
+  ,key8__35__ , ,7  ,7,7,7,7,,,,    ok index next(6+1)*5 fuer key8 is number t weil 7 wurde comment wird berechnet
+ 10 . key_10__50__ . value_key_10   . key_10_2_value_10_2  . key_10_3_value_10_3 .  key_10_4_value_10_4 . "key_10_5_value_10_5   10_5 not used"

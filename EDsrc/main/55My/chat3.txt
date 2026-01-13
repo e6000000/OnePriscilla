@@ -1,0 +1,20 @@
+import subprocess
+
+# Am Ende deines Scripts
+subprocess.run(["notepad++", "P2.htm"])
+
+
+# ... dein bisheriger Code ... [T3](1) [T8](2)
+
+if __name__ == '__main__':
+    print(f"--- Führe {SCRIPT_NAME} aus ---") [T13](3)
+    
+    result_array = parse_config_file()
+    write_output_file(result_array)
+    
+    # Öffne Notepad++ ohne Dialog/Error-Handling
+    import subprocess
+    subprocess.run(["notepad++", OUTFILE])
+
+
+
