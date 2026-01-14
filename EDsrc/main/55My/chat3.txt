@@ -17,4 +17,229 @@ if __name__ == '__main__':
     subprocess.run(["notepad++", OUTFILE])
 
 
+}}
+{ 
+10 c_bg_10
+11 #320a2b
+12 Color
+13 2
+14 2
+15 dbgg15
+16 1
+17 c_fg
+18 #cccccc
+19 Color
+20 c_btn20
+21 #3e3e42
+22 Color
+
+
+
+umbenannt zu onear  in module p4 and p2
+
+
+✓ ERFOLG: 55 Elemente wurden in 'P2.htm' geschrieben.
+equal
+--- p2.py . parse_config_file()  and compare_files(P4.htm,P2.htm) done ---
+
+
+
+✓ SUCCESS: 55 elements written to 'P4.htm'
+  Step size: 5
+  Debug mode: ON
+equal
+--- p4.py . parse_config()  and compare_files(P4.htm,P2.htm) done ---
+
+
+habe keine lust zum komma und klammern tippen , nur fuer mich! , es soll echt so mit reihenfolge und space functionieren kein = kein : kein , .. maximal 5 var also ,  oneset und 10 elemente ,11 elemente , ob die ''' noetig sind ? eigentlich nicht da es in py syntax stringReplace wird, mit oneset  als zauber keyword , und ein bis 20 space zwischen list element s
+
+'''
+oneset  c_btn20   #3e3e42   c_bg_10   #320a2b    c_fg  #cccccc  dbgg15  1    Color   4
+'''
+
+  #### oder soll auch gehen
+
+'''
+oneset        20 #3e3e42      10 #320a2b    17 #cccccc      15 1      22 4
+'''
+
+oneget    20       10     17      15      22  
+
+ ####or
+
+oneget    local1  c_btn20    new2  c_bg_10  n    c_fg    dbgg15      Color   
+
+das ist kein python syntax , dazu schreiben wir noch einen extra pre processor syntax formatter der das direct im file aendert , nur in debug version , in release ist py syntax correct 
+
+
+,,,1,,, correcte py syntax
+
+,,,2,,,  gedanken zur umsetzung
+
+
+
+}}
+{
+
+
+
+
+
+## ------------------------------------------------------
+
+import p4
+# file  test_setget_basic.py    # IMMER! reinschreiben aber immer alles english :-) 
+print("--- TEST 1: Basic Index Access ---")
+
+# 1. Init
+print("Initializing config...")
+p4.parse_config()
+
+# 2. Check variables we plan to change
+# 10 c_bg_10 -> Value at 11 is #320a2b
+# 15 dbgg15  -> Value at 16 is 1
+initial_vals = p4.oneget("10 15")
+print(f"Initial Values (10, 15): {initial_vals}")
+
+# 3. SET via Index/Key-Combo string
+# Note: In our current implementation '10' is treated as Key-Index. 
+# We update the Value at idx+1 (so 11 and 16).
+print("Executing: oneset '10 #NEWCOLOR 15 0'")
+p4.oneset("10 #NEWCOLOR 15 0")
+
+# 4. GET and Verify
+new_vals = p4.oneget("10 15")
+print(f"New Values (10, 15):     {new_vals}")
+
+if new_vals == ['#NEWCOLOR', '0']:
+    print("SUCCESS: Values updated correctly.")
+else:
+    print("FAILURE: Values mismatch.")
+    
+''' out  
+Initial Values (10, 15): ['#320a2b', '1']
+Executing: oneset '10 #NEWCOLOR 15 0'
+oneset: Updated [11] = '#NEWCOLOR' (via '10')
+oneset: Updated [16] = '0' (via '15')
+New Values (10, 15):     ['#NEWCOLOR', '0']
+SUCCESS: Values updated correctly.    
+'''
+
+
+
+## ------------------------------------------------------
+
+import p4
+# file  test_setget_keys.py    # IMMER! reinschreiben aber immer alles english :-) 
+print("--- TEST 2: Key Access & Strings ---")
+
+# 1. Init
+p4.parse_config()
+
+# 2. Check c_fg
+print("Initial c_fg:", p4.oneget("c_fg"))
+
+# 3. SET via Key
+print("Executing: oneset c_fg '#FF00FF'")
+p4.oneset("c_fg '#FF00FF'")
+
+# 4. Strings with spaces
+print("Executing: oneset dbgg 'Hello Space World'")
+p4.oneset("dbgg 'Hello Space World'")
+
+# 5. Verify
+vals = p4.oneget("c_fg dbgg")
+print(f"Result: {vals}")
+
+if vals[0] == '#FF00FF' and vals[1] == 'Hello Space World':
+    print("SUCCESS: Keys and Quoted Strings work.")
+else:
+    print("FAILURE.")
+
+''' out
+Initial c_fg: ['#cccccc']
+Executing: oneset c_fg '#FF00FF'
+oneset: Updated [18] = '#FF00FF' (via 'c_fg')
+Executing: oneset dbgg 'Hello Space World'
+ONESET ERROR: Key 'dbgg' not found.
+ONEGET ERROR: Key 'dbgg' not found.
+Result: ['#FF00FF', None]
+FAILURE.
+
+
+'''
+
+## ------------------------------------------------------
+
+
+,,,1,,, beschreib kurz das uebliche schreiben von app file test
+
+,,,2,,,  schreib deine meinung hierzu::
+,,, oder setze gleich um falls alles klar::
+
+# one pre test oneset  oneget  preprocessor to py syntax 
+
+,,, one_pre.bat : 'py one_pre.py'
+# files list to scan with one_pre.py  to change pre DEF oneget oneset to python syntax
+,,, one_pre_list.txt : 'pre1.pre.py'  <br> 'pre2.pre.py'
+
+,,, pre1.pre.py :  
+
+# local  l1  l2  l3  l4  l5  l6
+
+oneset  c_btn20   #3e3e4211   c_bg_10   #320a2b11 
+# hier muesste nach one_pre.py scan strRepl dann py syntax stehen
+oneset   c_btn20   #3e3e4222   c_bg_10   #320a2b22
+# hier muesste nach one_pre.py scan strRepl dann py syntax stehen
+onget  l1 dbgg15   l2   Color 
+# hier muesste nach one_pre.py scan strRepl dann py syntax stehen
+
+# das braucht wohl noch eine func:  onear[dbgg15]
+print(f" c_btn20={onear[dbgg15]}      c_bg_10={onear[Color]}    ")
+print  c_btn20 =   c_bg_10  =  // schreib correcte syntax please
+print(f" l1={dbgg15}      l2={Color}    ")
+
+,,, pre1.pre.py   end file
+
+
+,,, pre2.pre.py
+# local l3  l4 l5 l6 
+
+onget  l5  20    l6  25  
+# hier muesste nach one_pre.py scan strRepl dann py syntax stehen
+
+l3=onear[20]
+l4=onear[25]
+## print(f" l5={c_btn20}      l6={dbgg15}    ")
+print(f" l5={l3}      l6={l4}    ")
+
+,,, pre2.pre.py  end file
+
+}}
+
+{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

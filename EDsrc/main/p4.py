@@ -3,6 +3,7 @@ import os
 # later for notepad++ open: before: def create_test_file(): 
 import subprocess
 import sys    
+import one_pre  # <--- Added import
 
     
 # --- Global Configuration AI is Claude id 4 ---
@@ -20,20 +21,15 @@ COMMENT_MARKERS = ['<!--', '-->', '//', ';', '#cs', '#ce', '#', 'rem', '/*', '*/
 debgg = 1  # Debug mode: 1 = on, 0 = off
 
 
+# --- Global State ---
+onear = []
+
 def parse_config():
     """
-    Parses config file into 1D array structure.
-    
-    Rules:
-    1. Search for "stepX" keyword to determine step size
-    2. Index 0 is treated like any other index (no special handling)
-    3. Key name before delimiter can be anything
-    4. Comment lines: Only parse if index number DIRECTLY after comment opener
-       Examples:
-       - <!--2-->|key|value  → VALID (index 2 directly after <!--)
-       - //7,key,value       → INVALID (no index directly after //)
-       - -->1|key|value      → VALID (index 1 directly after -->)
+    Parses config file into 1D array structure (onear).
     """
+    global onear
+    
     # --- Initialization ---
     DELIMITERS = ['.', ',', '|', ';']
     VALID_STEPS = {'step2': 2, 'step4': 4, 'step5': 5, 'step8': 8, 'step10': 10, 'step16': 16}
@@ -45,9 +41,10 @@ def parse_config():
             lines = f.readlines()
     except FileNotFoundError:
         print(f"ERROR: Input file '{INFILE}' not found.")
+        onear = []
         return
 
-    out_arr = []
+    onear = [] # Reset Global Array
     step = 5  # Default
     step_found = False
     last_idx = -1
@@ -145,11 +142,11 @@ def parse_config():
         start_pos = idx * step
         required_size = start_pos + step
 
-        if len(out_arr) < required_size:
-            out_arr.extend([''] * (required_size - len(out_arr)))
+        if len(onear) < required_size:
+            onear.extend([''] * (required_size - len(onear)))
         
         for i, value in enumerate(values):
-            out_arr[start_pos + i] = value
+            onear[start_pos + i] = value
         
         comment_flag = " [COMMENT]" if is_comment else ""
         if debgg:
@@ -158,10 +155,10 @@ def parse_config():
     # --- Write Output ---
     try:
         with open(OUTFILE, "w", encoding="utf-8") as f:
-            for i, value in enumerate(out_arr):
+            for i, value in enumerate(onear):
                 f.write(f"{i} {value}\n")
         
-        print(f"\n✓ SUCCESS: {len(out_arr)} elements written to '{OUTFILE}'")
+        print(f"\n✓ SUCCESS: {len(onear)} elements written to '{OUTFILE}'")
         print(f"  Step size: {step}")
         print(f"  Debug mode: {'ON' if debgg else 'OFF'}")
         
@@ -175,6 +172,20 @@ def parse_config():
     if debgg: subprocess.run(["notepad++", OUTFILE])
     # --- NEW LINE: Open the file with Notepad++ ---
     # os.system(f"notepad++.exe {OUTFILE}")
+
+
+# --- OneSet / OneGet Wrappers ---
+def oneset(q):
+    """
+    Example: oneset("Key Val Index Val")
+    """
+    one_pre.do_oneset(onear, q)
+
+def oneget(q):
+    """
+    Example: oneget("Key Index") -> [Val1, Val2]
+    """
+    return one_pre.do_oneget(onear, q)
 
 
 # -------------------------------------------------
@@ -285,7 +296,7 @@ def create_test_file():
 # 6.key6_ar_30  .6.6.6.6.6.6.6.6.....
 //,key7,,,7,7,,,7,7,7,,,    must ignore , kein index   direct nach comment
   ,key8 , ,7  ,7,7,7,7,,,,    ok index next(6+1)*5 fuer key8 is number t weil 7 wurde comment wird berechnet
- 10 . key_10_array_50_ . value_key_10   . key_10_2_value_10_2  . key_10_3_value_10_3 .  key_10_4_value_10_4 . "key_10_5_value_10_5   10_5 not used"
+  10 . key_10_array_50_ . value_key_10   . key_10_2_value_10_2  . key_10_3_value_10_3 .  key_10_4_value_10_4 . "key_10_5_value_10_5   10_5 not used"
 
 """
     test_out = """
