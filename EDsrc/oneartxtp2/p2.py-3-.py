@@ -1,18 +1,23 @@
 import os
 import re
 
-# ver p3.py nu  keine ahnung ob correct  
+# open Notepad++ ohne Dialog/Error-Handling
+import subprocess
+
+
 # --- Globale Konfiguration ---
 AI_ID = 2
 SCRIPT_NAME = f"p{AI_ID}.py"
 INFILE = "Gtst.htm"
 OUTFILE = f"P{AI_ID}.htm"
+OUTFILEPDAT = f"pDAT{AI_ID}.htm"
+
 
 # Debug-Schalter. Setze auf True für detaillierte Ausgaben, sonst False.
 DEBUG = True
 
 # --- Konfiguration der Parser-Regeln ---
-DELIMITERS = ['.', ',', '|']
+DELIMITERS = ['.', ',', '|', ';']
 VALID_STEPS = {'step2': 2, 'step4': 4, 'step5': 5, 'step8': 8, 'step10': 10, 'step16': 16}
 DEFAULT_STEP = 5
 
@@ -92,8 +97,8 @@ def parse_config_file():
         if DEBUG:
             print(f"Zeile {line_num+1}: Verarbeitet -> Index={idx}, Trennzeichen='{delimiter}', Werte={values} -> Positionen {start_pos}-{start_pos + step - 1}")
 
-    return output_array, step
-    # return output_array
+    # return output_array, step
+    return output_array
 
 def write_output_file(data):
     if not data:
@@ -106,6 +111,12 @@ def write_output_file(data):
             for i, value in enumerate(data):
                 f.write(f"{i} {value}\n")
         print(f"\n✓ ERFOLG: {len(data)} Elemente wurden in '{OUTFILE}' geschrieben.")
+        
+        # Nach write_output_file() oder am Ende von parse_config()
+        subprocess.run(["notepad++", OUTFILE])
+        # --- NEW LINE: Open the file with Notepad++ ---
+        # os.system(f"notepad++.exe {OUTFILE}")
+        
     except IOError as e:
         print(f"\nFEHLER: Schreiben der Datei '{OUTFILE}' fehlgeschlagen: {e}")
 
@@ -143,6 +154,11 @@ if __name__ == '__main__':
     #
     write_output_file(result_array)
     print(f"--- {SCRIPT_NAME} beendet ---")
+    
+    # Nach write_output_file() oder am Ende von parse_config()
+    subprocess.run(["notepad++", OUTFILE])
+    # --- NEW LINE: Open the file with Notepad++ ---
+    # os.system(f"notepad++.exe {OUTFILE}")
 
 '''
 def parse_config_file():
@@ -153,7 +169,7 @@ def parse_config_file():
     Inklusive der Regel für die Behandlung von Kommentarzeilen.
     """ [T9](1)
 
-def write_output_file(data):
+def write_output_file(data):                  # in comment line
     """Schreibt das 1D-Array in die Zieldatei.""" [T12](2)
     
     

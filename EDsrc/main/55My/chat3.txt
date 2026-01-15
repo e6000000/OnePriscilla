@@ -218,9 +218,88 @@ print(f" l5={l3}      l6={l4}    ")
 }}
 
 {
+	
+
+,,,1,,, langsam und genau
+,,,  ich bin ingenieur wir machen es sauber richtig 
+,,, weil es keinen nachteil bringt.
+
+,,,4,,, wir haben nix garnix eingerichtet !!! nur im planung modus!!! sind wir jetzt !!! noch !!!
+entweder alles auf 0 und du schreibst wie ich dann anfang OR du hast es vergessen und wir richten weiter ein ???
 
 
 
+der chat is gespeichert: 
+
+
+https://github.com/e6000000/OnePriscilla/tree/main/EDsrc/main
+
+
+D:\ws\gitGit\source\workspaces\onepriscilla\EDsrc\main\p4.bat   startet p4.py   windows 10 py -3.10 my.py ### py  launcher , kein env pynocci  anaconsd   minicond  PATH  ... nix von dem ...
+
+
+
+public github:
+
+https://github.com/e6000000/OnePriscilla/tree/main/EDsrc/main/p4.bat
+ , , , D:\ws\gitGit\source\workspaces\onepriscilla\EDsrc\main\p4.bat 
+
+
+https://github.com/e6000000/OnePriscilla/
+D:\ws\gitGit\source\workspaces\onepriscilla\
+
+
+https://github.com/e6000000/
+D:\ws\gitGit\source\workspaces\
+
+
+
+}}
+{
+	
+	
+ich will zwei array oder json oder  langen string oder was sinnvoll ist , dass folgendes functioniert:
+
+
+# local   b c d e f  index   i
+
+
+schreib func:   
+   i =  oneindex('keyname')
+a = onearkey('keyname')
+
+a = onear[22]
+samesame
+a = onearkey('keyname')
+a = onearkey(22)
+
+
+
+# mein ansatz waere: 
+ # local   b c d e f  index   i
+schreib func:   
+   i =  oneindex('keyname')
+a = onearkey('keyname')
+  
+OR mach es besser dass obiges functioniert
+
+
+
+
+	import onear
+
+# In p4.py (Schreiben)
+def starte_alles():
+    onear.init()         # Einmal am Anfang
+    onear.data[10] = "#FEFEFE"
+    onear.data[20] = "ButtonColor"
+
+# In p2.py (Lesen)
+def mach_was():
+    farbe = onear.data[10]  # Liest "#FEFEFE"
+    print(farbe)
+	
+	
 
 
 

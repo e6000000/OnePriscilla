@@ -13,8 +13,7 @@ INFILE = "Gtst.htm"
 OUTFILE = f"P{AI_ID}.htm"
 # Debug-Schalter. Setze auf True für detaillierte Ausgaben, sonst False.
 DEBUG = True
-debgg = DEBUG
-DELIMITERS = ['.', ',', '|']
+DELIMITERS = ['.', ',', '|', ';']
 VALID_STEPS = {'step2': 2, 'step4': 4, 'step5': 5, 'step8': 8, 'step10': 10, 'step16': 16}
 COMMENT_MARKERS = ['<!--', '-->', '//', ';', '#cs', '#ce', '#', 'rem', '/*', '*/']         #   ';', '#cs', '#ce' is comment in autoit 
 #   ';', '#cs', '#ce' is comment in autoit 

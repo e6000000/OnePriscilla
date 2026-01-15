@@ -1,7 +1,6 @@
 import os
 import re
 
-# ver p3.py nu  keine ahnung ob correct  
 # --- Globale Konfiguration ---
 AI_ID = 2
 SCRIPT_NAME = f"p{AI_ID}.py"
@@ -12,7 +11,7 @@ OUTFILE = f"P{AI_ID}.htm"
 DEBUG = True
 
 # --- Konfiguration der Parser-Regeln ---
-DELIMITERS = ['.', ',', '|']
+DELIMITERS = ['.', ',', '|', ';']
 VALID_STEPS = {'step2': 2, 'step4': 4, 'step5': 5, 'step8': 8, 'step10': 10, 'step16': 16}
 DEFAULT_STEP = 5
 
