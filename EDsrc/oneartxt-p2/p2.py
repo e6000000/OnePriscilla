@@ -2,6 +2,7 @@ import os
 import re  
 import subprocess
 import sys
+from onear_transformer import transform_onear
 
 
 # --- Globale Konfiguration ---
@@ -20,7 +21,8 @@ COMMENT_MARKERS = ['<!--', '-->', '//', ';', '#cs', '#ce', '#', 'rem', '/*', '*/
 DEFAULT_STEP = 5
 
 # --- Global State ---
-onear = []
+# onear = []
+onear_oldstep = []
 
 
 
@@ -67,16 +69,16 @@ def write_output_file(data):
 
 
 def parse_config_file():
-    global onear
+    global onear_oldstep
     try:
         with open(INFILE, "r", encoding="utf-8") as f:
             lines = f.readlines()
     except FileNotFoundError:
         print(f"FEHLER: Eingabedatei '{INFILE}' nicht gefunden.")
-        onear = []
-        return onear
+        onear_oldstep = []
+        return onear_oldstep
 
-    onear = [] # Reset global array
+    onear_oldstep = [] # Reset global array
     aadd = DEFAULT_STEP
     step_is_finalized = False
     last_idx = -1
@@ -164,14 +166,14 @@ def parse_config_file():
 
         start_pos = idx * aadd
         required_size = start_pos + aadd
-        if len(onear) < required_size:
-            onear.extend([''] * (required_size - len(onear)))
-        onear[start_pos : start_pos + aadd] = values
+        if len(onear_oldstep) < required_size:
+            onear_oldstep.extend([''] * (required_size - len(onear_oldstep)))
+        onear_oldstep[start_pos : start_pos + aadd] = values
 
         if DEBUG:
             print(f"Zeile {line_num+1}: Verarbeitet -> Index={idx}, Trennzeichen='{delimiter}', Werte={values} -> Positionen {start_pos}-{start_pos + aadd - 1}")
 
-    return onear
+    return onear_oldstep
    
 
 def compare_files(file_path1, file_path2):
@@ -226,10 +228,13 @@ if __name__ == '__main__':
         # Actually in original code it created file. I will simplify main slightly or keep logic.
         # Let's keep logic simple: call parse.
     
-    # We call parse_config_file which populates the global 'onear'
+    # We call parse_config_file which populates the global 'onear_oldstep'
     parse_config_file()
     
-    # Write from the global 'onear' to p2.htm and to p2.html with L ext  and first line '# <pre>'
+    # Transform onear_oldstep to new onear schema
+    onear = transform_onear(onear_oldstep, input_step=5) # Assuming input aadd is 5 (DEFAULT_STEP)
+
+    # Write from the generated 'onear' to p2.htm and to p2.html with L ext  and first line '# <pre>'
     write_output_file_no_pre(onear)
     write_output_file(onear)
     
