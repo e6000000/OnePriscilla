@@ -9,17 +9,62 @@ AI_ID = 2
 SCRIPT_NAME = f"p{AI_ID}.py"
 INFILE = "Gtst.htm"
 OUTFILE = f"P{AI_ID}.htm"
-OUTFILEPDAT = f"pDAT{AI_ID}.htm"
+outhtml = OUTFILE + 'l'
+ 
 DEBUG = True
 debgg = DEBUG
 
-DELIMITERS = ['.', ',', '|', ';']
+DELIMITERS = ['.', ',', '|']
 VALID_STEPS = {'step2': 2, 'step4': 4, 'step5': 5, 'step8': 8, 'step10': 10, 'step16': 16}
 COMMENT_MARKERS = ['<!--', '-->', '//', ';', '#cs', '#ce', '#', 'rem', '/*', '*/']
 DEFAULT_STEP = 5
 
 # --- Global State ---
 onear = []
+
+
+
+
+def write_output_file_no_pre(data):
+    if not data:
+        print("Warnung: Keine Daten zum Schreiben vorhanden.")
+        return
+    try:
+        with open(OUTFILE, "w", encoding="utf-8") as f:
+            for i, value in enumerate(data):
+                f.write(f"{i} {value}\n")
+        print(f"\n✓ ERFOLG: {len(data)} Elemente wurden in '{OUTFILE}' geschrieben.")
+        
+        subprocess.run(["notepad++", OUTFILE])
+        
+    except IOError as e:
+        print(f"\nFEHLER: Schreiben der Datei '{OUTFILE}' fehlgeschlagen: {e}")
+
+
+
+
+def write_output_file(data):
+    # 'xx.htm' + 'l' = 'xx.html' -> Works perfectly
+    outhtml = OUTFILE + 'l'
+    if not data:
+        print("Warning: No data to write.")
+        return
+    try:
+        with open(outhtml, "w", encoding="utf-8") as f:
+            f.write("# <pre>\n")  #  add as the first line to the p2.html ext is html  not htm file.htm no have first line with # <pre>
+            for i, value in enumerate(data):
+                f.write(f"{i} {value}\n")
+        
+        print(f"\n✓ SUCCESS: {len(data)} elements written frst-line: # <pre>  ext:html  to '{outhtml}'.")
+        
+        # Open Notepad++ (Ensure it's in your system PATH or use full path)
+        subprocess.run(["notepad++", outhtml])
+        
+    except IOError as e:
+        print(f"\nERROR: Failed to write file '{outhtml}': {e}")
+        
+     
+
 
 def parse_config_file():
     global onear
@@ -127,22 +172,7 @@ def parse_config_file():
             print(f"Zeile {line_num+1}: Verarbeitet -> Index={idx}, Trennzeichen='{delimiter}', Werte={values} -> Positionen {start_pos}-{start_pos + step - 1}")
 
     return onear
-
-def write_output_file(data):
-    if not data:
-        print("Warnung: Keine Daten zum Schreiben vorhanden.")
-        return
-    try:
-        with open(OUTFILE, "w", encoding="utf-8") as f:
-            for i, value in enumerate(data):
-                f.write(f"{i} {value}\n")
-        print(f"\n✓ ERFOLG: {len(data)} Elemente wurden in '{OUTFILE}' geschrieben.")
-        
-        subprocess.run(["notepad++", OUTFILE])
-        
-    except IOError as e:
-        print(f"\nFEHLER: Schreiben der Datei '{OUTFILE}' fehlgeschlagen: {e}")
-
+   
 
 def compare_files(file_path1, file_path2):
     """
@@ -199,7 +229,8 @@ if __name__ == '__main__':
     # We call parse_config_file which populates the global 'onear'
     parse_config_file()
     
-    # Write from the global 'onear'
+    # Write from the global 'onear' to p2.htm and to p2.html with L ext  and first line '# <pre>'
+    write_output_file_no_pre(onear)
     write_output_file(onear)
     
     compare_files("P4.htm","P2.htm")

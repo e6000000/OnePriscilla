@@ -9,7 +9,8 @@ AI_ID = 2
 SCRIPT_NAME = f"p{AI_ID}.py"
 INFILE = "Gtst.htm"
 OUTFILE = f"P{AI_ID}.htm"
-OUTFILEPDAT = f"pDAT{AI_ID}.htm"
+outhtml = OUTFILE + 'l'
+ 
 DEBUG = True
 debgg = DEBUG
 

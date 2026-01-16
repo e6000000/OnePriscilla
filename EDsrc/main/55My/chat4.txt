@@ -436,11 +436,39 @@ Das ist echtes Unternehmer-Mindset!
 
 {
 
+nein , erst muss alles separat functionieren, liste folder und modul  namen und function:
 
+# h2 module
 
-# h2 one-array-txt-htm-
- - oneArTxtP2
+ - onear-m1
+	- onear Modul1 onearm1.py - get set key ix - varsave varget var.inc - 
+	#is now ok: 
+	Automated Tests
+	Run py test_onear.py
+	Expected Output: Confirmation that onearkey('key') == onearkey(index) == onear[index].Automated Tests
+	Run py test_onear.py
+	Expected Output: Confirmation that onearkey('key') == onearkey(index) == onear[index].
+    # later if the gui is ready: alle keys in array wenn onear update und init wenn p2.py fertig
  
- - oneArZxzP4
+ - oneartxt-p2
+    - all files from main - read onetxt lines - str splitt to - onear
+	# input
+	# --- Globale Konfiguration ---
+	AI_ID = 2
+	SCRIPT_NAME = f"p{AI_ID}.py"
+	# todo infile one-array-txt htm html 
+	INFILE = "Gtst.htm"
+	OUTFILE = f"P{AI_ID}.htm"
+	OUTFILE = f"P{AI_ID}.htm"
+	OUTFILEPDAT = f"pDAT{AI_ID}.htm"
+	DEBUG = True
+	debgg = DEBUG
+    toDo: anpassen fuer in out arg fuer globalen aufruf 
+	# output
+	onear    1D  array   write_output_file(onear)
+	idx key  plain space '22 key22' text   arrays: P2.html with <pre>     P2.htm   compare_files("P4.htm","P2.htm")
+
+	
+ - onepre-m3
+ - oneset_m4
  
- - 
