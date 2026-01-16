@@ -438,10 +438,10 @@ Das ist echtes Unternehmer-Mindset!
 
 nein , erst muss alles separat functionieren, liste folder und modul  namen und function:
 
-# h2 module
+# h2 module folders
 
  - onear-m1
-	- onear Modul1 onearm1.py - get set key ix - varsave varget var.inc - 
+	- onear Modul1 onear.py - get set key ix - varsave varget var.inc - strg fileget  filesave save eg. a help cmd PS bat a settings json line byline -
 	#is now ok: 
 	Automated Tests
 	Run py test_onear.py
@@ -451,7 +451,7 @@ nein , erst muss alles separat functionieren, liste folder und modul  namen und 
     # later if the gui is ready: alle keys in array wenn onear update und init wenn p2.py fertig
  
  - oneartxt-p2
-    - all files from main - read onetxt lines - str splitt to - onear
+    - all files from main - read onetxt lines - str splitt stepXX to - onear -
 	# input
 	# --- Globale Konfiguration ---
 	AI_ID = 2
@@ -470,5 +470,19 @@ nein , erst muss alles separat functionieren, liste folder und modul  namen und 
 
 	
  - onepre-m3
+    - one PRE process Modul3 - str repl easy plain to py syntax -
+	eg
+	Expected Output: Confirmation that onearkey('key') == onearkey(index) == onear[index].
+ 
+    easy plain txt to py syntax:
+	oneset   c_btn20   #3e3e4211   c_bg_10   #320a2b11
+	means:
+	local  idx
+	idx = oneidx('c_btn20')
+	onear[idx]='#3e3e4211'
+    idx = oneidx('c_bg_10')
+	onear[idx]='#320a2b11'
+	
+ 
  - oneset_m4
  

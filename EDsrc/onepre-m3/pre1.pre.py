@@ -5,7 +5,7 @@ from p4 import onear
 
 
 
-#  c_btn20   #3e3e4211   c_bg_10   #320a2b11
+#  oneset   c_btn20   #3e3e4211   c_bg_10   #320a2b11
 # hier muesste nach one_pre.py scan strRepl dann py syntax stehen
 p4.oneset("c_btn20   #3e3e4211   c_bg_10   #320a2b11")
 
