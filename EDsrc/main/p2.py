@@ -2,6 +2,7 @@ import os
 import re  
 import subprocess
 import sys
+from onear_transformer import transform_onear
 
 
 # --- Globale Konfiguration ---
@@ -20,7 +21,8 @@ COMMENT_MARKERS = ['<!--', '-->', '//', ';', '#cs', '#ce', '#', 'rem', '/*', '*/
 DEFAULT_STEP = 5
 
 # --- Global State ---
-onear = []
+# onear = []
+onear_oldstep = []
 
 
 
@@ -67,17 +69,17 @@ def write_output_file(data):
 
 
 def parse_config_file():
-    global onear
+    global onear_oldstep
     try:
         with open(INFILE, "r", encoding="utf-8") as f:
             lines = f.readlines()
     except FileNotFoundError:
         print(f"FEHLER: Eingabedatei '{INFILE}' nicht gefunden.")
-        onear = []
-        return onear
+        onear_oldstep = []
+        return onear_oldstep
 
-    onear = [] # Reset global array
-    step = DEFAULT_STEP
+    onear_oldstep = [] # Reset global array
+    aadd = DEFAULT_STEP
     step_is_finalized = False
     last_idx = -1
     delimiter_class = '[' + re.escape(''.join(DELIMITERS)) + ']'
@@ -146,37 +148,37 @@ def parse_config_file():
             found_step_in_line = False
             for key, val in VALID_STEPS.items():
                 if key in original_line:
-                    step = val
-                    print(f"Info: Step-Größe wurde aus Zeile {line_num+1} auf {step} gesetzt (Schlüsselwort '{key}' gefunden).")
+                    aadd = val
+                    print(f"Info: Step-Größe wurde aus Zeile {line_num+1} auf {aadd} gesetzt (Schlüsselwort '{key}' gefunden).")
                     found_step_in_line = True
                     break
             if not found_step_in_line and DEBUG:
-                print(f"Warnung: In Zeile mit Index 0 wurde kein 'stepX' gefunden. Benutze Standard-Step: {step}.")
+                print(f"Warnung: In Zeile mit Index 0 wurde kein 'stepX' gefunden. Benutze Standard-Step: {aadd}.")
             step_is_finalized = True
 
         values = [p.strip() for p in content.split(delimiter)]
 
-        if len(values) > step:
-            if DEBUG: print(f"Zeile {line_num+1}: Kürze Werte von {len(values)} auf {step}.")
-            values = values[:step]
-        elif len(values) < step:
-            values.extend([''] * (step - len(values)))
+        if len(values) > aadd:
+            if DEBUG: print(f"Zeile {line_num+1}: Kürze Werte von {len(values)} auf {aadd}.")
+            values = values[:aadd]
+        elif len(values) < aadd:
+            values.extend([''] * (aadd - len(values)))
 
-        start_pos = idx * step
-        required_size = start_pos + step
-        if len(onear) < required_size:
-            onear.extend([''] * (required_size - len(onear)))
-        onear[start_pos : start_pos + step] = values
+        start_pos = idx * aadd
+        required_size = start_pos + aadd
+        if len(onear_oldstep) < required_size:
+            onear_oldstep.extend([''] * (required_size - len(onear_oldstep)))
+        onear_oldstep[start_pos : start_pos + aadd] = values
 
         if DEBUG:
-            print(f"Zeile {line_num+1}: Verarbeitet -> Index={idx}, Trennzeichen='{delimiter}', Werte={values} -> Positionen {start_pos}-{start_pos + step - 1}")
+            print(f"Zeile {line_num+1}: Verarbeitet -> Index={idx}, Trennzeichen='{delimiter}', Werte={values} -> Positionen {start_pos}-{start_pos + aadd - 1}")
 
-    return onear
+    return onear_oldstep
    
 
 def compare_files(file_path1, file_path2):
     """
-    Compares two text files line by line, assuming each line is in the format 'index value' (e.g., '0 step').
+    Compares two text files line by line, assuming each line is in the format 'index value' (e.g., '0 aadd').
     Outputs 'equal' if the files are identical line by line.
     Otherwise, shows the differing lines with their indices.
     """
@@ -226,10 +228,13 @@ if __name__ == '__main__':
         # Actually in original code it created file. I will simplify main slightly or keep logic.
         # Let's keep logic simple: call parse.
     
-    # We call parse_config_file which populates the global 'onear'
+    # We call parse_config_file which populates the global 'onear_oldstep'
     parse_config_file()
     
-    # Write from the global 'onear' to p2.htm and to p2.html with L ext  and first line '# <pre>'
+    # Transform onear_oldstep to new onear schema
+    onear = transform_onear(onear_oldstep, input_step=5) # Assuming input aadd is 5 (DEFAULT_STEP)
+
+    # Write from the generated 'onear' to p2.htm and to p2.html with L ext  and first line '# <pre>'
     write_output_file_no_pre(onear)
     write_output_file(onear)
     

@@ -77,7 +77,7 @@ def parse_config_file():
         return onear
 
     onear = [] # Reset global array
-    step = DEFAULT_STEP
+    aadd = DEFAULT_STEP
     step_is_finalized = False
     last_idx = -1
     delimiter_class = '[' + re.escape(''.join(DELIMITERS)) + ']'
@@ -146,37 +146,37 @@ def parse_config_file():
             found_step_in_line = False
             for key, val in VALID_STEPS.items():
                 if key in original_line:
-                    step = val
-                    print(f"Info: Step-Größe wurde aus Zeile {line_num+1} auf {step} gesetzt (Schlüsselwort '{key}' gefunden).")
+                    aadd = val
+                    print(f"Info: Step-Größe wurde aus Zeile {line_num+1} auf {aadd} gesetzt (Schlüsselwort '{key}' gefunden).")
                     found_step_in_line = True
                     break
             if not found_step_in_line and DEBUG:
-                print(f"Warnung: In Zeile mit Index 0 wurde kein 'stepX' gefunden. Benutze Standard-Step: {step}.")
+                print(f"Warnung: In Zeile mit Index 0 wurde kein 'stepX' gefunden. Benutze Standard-Step: {aadd}.")
             step_is_finalized = True
 
         values = [p.strip() for p in content.split(delimiter)]
 
-        if len(values) > step:
-            if DEBUG: print(f"Zeile {line_num+1}: Kürze Werte von {len(values)} auf {step}.")
-            values = values[:step]
-        elif len(values) < step:
-            values.extend([''] * (step - len(values)))
+        if len(values) > aadd:
+            if DEBUG: print(f"Zeile {line_num+1}: Kürze Werte von {len(values)} auf {aadd}.")
+            values = values[:aadd]
+        elif len(values) < aadd:
+            values.extend([''] * (aadd - len(values)))
 
-        start_pos = idx * step
-        required_size = start_pos + step
+        start_pos = idx * aadd
+        required_size = start_pos + aadd
         if len(onear) < required_size:
             onear.extend([''] * (required_size - len(onear)))
-        onear[start_pos : start_pos + step] = values
+        onear[start_pos : start_pos + aadd] = values
 
         if DEBUG:
-            print(f"Zeile {line_num+1}: Verarbeitet -> Index={idx}, Trennzeichen='{delimiter}', Werte={values} -> Positionen {start_pos}-{start_pos + step - 1}")
+            print(f"Zeile {line_num+1}: Verarbeitet -> Index={idx}, Trennzeichen='{delimiter}', Werte={values} -> Positionen {start_pos}-{start_pos + aadd - 1}")
 
     return onear
    
 
 def compare_files(file_path1, file_path2):
     """
-    Compares two text files line by line, assuming each line is in the format 'index value' (e.g., '0 step').
+    Compares two text files line by line, assuming each line is in the format 'index value' (e.g., '0 aadd').
     Outputs 'equal' if the files are identical line by line.
     Otherwise, shows the differing lines with their indices.
     """

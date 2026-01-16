@@ -214,7 +214,7 @@ Richard Branson: "I don't do, I delegate"
 
 
 
-Hahaha, you are absolutely right! That is a brilliant observation and a major step up in strategic thinking.
+Hahaha, you are absolutely right! That is a brilliant observation and a major aadd up in strategic thinking.
 
 You've moved from the perspective of a *doer* to the perspective of a *leader* or *investor*.
 
@@ -436,7 +436,106 @@ Das ist echtes Unternehmer-Mindset!
 
 {
 
-nein , erst muss alles separat functionieren, liste folder und modul  namen und function:
+
+p2.py in main folder anpassen , ((die neuen folder kommen danach drann))
+onear-m1
+One Array Modul 1
+
+
+
+
+in modul p2 wird onear zu p2.htm  geschrieben 1 zu 1 vom onear aus im modul p2.py
+
+
+
+## das stammt init aus dem input txt lines eg:
+
+10   ,   key  , "val1"  , "val2"  , "val3"  , "val4"  
+
+## **key-names , eg. keya keyb keyc keyd keye  eg** ##
+
+
+10  keya = key  
+11  keyname not used on this index is value of key
+12  keyc = // value of: keyname: 'keyname of idx[groupidx + 2]' + '2' // keyname = key2  value = onear(key2) ==  value = onear(12)  == onear('key' + '3')
+13  keyd = // value of: keyname: 'keyname of idx[groupidx + 3]' + '3' // keyname = key3  value = onear(key3) ==  value = onear(13)  == onear('key' + '3')
+14  keye = // value of: keyname: 'keyname of idx[groupidx + 4]' + '4' // keyname = key4  value = onear(key4) ==  value = onear(14)  == onear('key' + '4')
+
+
+15 dbgg15       // key_name= dbgg15
+16 1			// 
+17 c_fg         // value of index 15 + 2  // value of: keyname: keyname of idx[15] + '2' // keyname = dbgg152
+18 #cccccc      // value of index 15 + 3  // value of: keyname: keyname of idx[15] + '3' // keyname = dbgg153
+19 Color        // value of index 15 + 4  // value of: keyname: keyname of idx[15] + '4' // keyname = dbgg154
+
+20 c_btn20
+21 #3e3e42
+22 Color
+23 4
+24 4
+
+25 key_ohne_index ohne comment25
+
+
+## **und nun stop ich denk an steve jobs , also lass sein , machs einfach linear , wenns auch einfach geht** ##
+
+
+:==>>> also werden wir die p2.py veraendern ,
+		/*  welche aus: ,,, idx , key , und 4 folgende val ,val, val ,val  ,,, nur 5 { index : content } macht */
+
+und die ganze rechnerei und definition weglassen:
+
+weglassen beginn:-------------------------------------------
+## das stammt init aus dem input txt lines eg:
+
+10   ,   key  , "val1"  , "val2"  , "val3"  , "val4"  
+
+## **key-names , eg. keya keyb keyc keyd keye  eg** ##
+
+
+10  keya = key  
+11  keyname not used on this index is value of key
+12  keyc = // value of: keyname: 'keyname of idx[groupidx + 2]' + '2' // keyname = key2  value = onear(key2) ==  value = onear(12)  == onear('key' + '3')
+13  keyd = // value of: keyname: 'keyname of idx[groupidx + 3]' + '3' // keyname = key3  value = onear(key3) ==  value = onear(13)  == onear('key' + '3')
+14  keye = // value of: keyname: 'keyname of idx[groupidx + 4]' + '4' // keyname = key4  value = onear(key4) ==  value = onear(14)  == onear('key' + '4')
+
+
+:weglassen end----------------------------------
+
+
+schema line to index of array wird geaendert:
+
+,,, in txt line:
+,,, idx , key , und 4 folgende vala ,valb, valc ,vald  ,,,
+p2 wandelt das schon in lineares array um also brauchen wir nur noch eine aufweitung , und weil speicher hier keine rolle spielt verdoppeln wir die stepXX 
+
+also nur einfach neues array in schleife erzeugen:
+
+onear old mit 5 { index : content }   zu  onear new  mit ((einfach 2x stepXX)) 10 { index : content }   ((muss am schluss onearr heissen , vielleicht in p2.py das onear erstmal ren onear_old5step ,,, pair is key ,,, unpair is value ,,,
+
+onearr 10  =  onearrold  10 
+onearr 11  =  onearrold  11 
+
+onearr 12  =  "onearrold  10" + "1"  strg keyname   // das alte ruckelige schema verlassen {{ "onearrold  10" + "2"  strg keyname}}und konsequent mit 1 nach dem key0 benennen
+onearr 13  =  onearrold  12 
+
+onearr 14  =  "onearrold  10" + "2"  strg keyname
+onearr 15  =  onearrold  13 
+
+onearr 16  =  "onearrold  10" + "3"  strg keyname
+onearr 17  =  onearrold  14 
+
+onearr 18  =  "onearrold  10" + "4"  strg keyname
+onearr 19  =  empty not used
+
+
+todo schreib ein function fuer p2.py welche das einfachere array schema erzeugr aus dem vorhandenen onear , in ein neues file , und kurz fuer p2.py die aenderung um das neue function einbinden.
+
+
+
+noch fragen?
+}}
+{erst muss alles separat functionieren, liste folder und modul  namen und function:
 
 # h2 module folders
 

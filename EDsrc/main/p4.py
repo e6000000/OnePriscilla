@@ -46,7 +46,7 @@ def parse_config():
         return
 
     onear = [] # Reset Global Array
-    step = 5  # Default
+    aadd = 5  # Default
     step_found = False
     last_idx = -1
 
@@ -119,9 +119,9 @@ def parse_config():
             line_lower = line.lower()
             for step_keyword, step_value in VALID_STEPS.items():
                 if step_keyword in line_lower:
-                    step = step_value
+                    aadd = step_value
                     step_found = True
-                    print(f"INFO: Step size set to {step} (found '{step_keyword}' in line {line_num})")
+                    print(f"INFO: Step size set to {aadd} (found '{step_keyword}' in line {line_num})")
                     break
 
         # --- Parse Values ---
@@ -132,16 +132,16 @@ def parse_config():
             values.pop()
 
         # --- Normalize to Step Size ---
-        if len(values) > step:
+        if len(values) > aadd:
             if debgg:
-                print(f"Line {line_num}: Truncating {len(values)} to {step}")
-            values = values[:step]
-        elif len(values) < step:
-            values.extend([''] * (step - len(values)))
+                print(f"Line {line_num}: Truncating {len(values)} to {aadd}")
+            values = values[:aadd]
+        elif len(values) < aadd:
+            values.extend([''] * (aadd - len(values)))
 
         # --- Insert into 1D Array ---
-        start_pos = idx * step
-        required_size = start_pos + step
+        start_pos = idx * aadd
+        required_size = start_pos + aadd
 
         if len(onear) < required_size:
             onear.extend([''] * (required_size - len(onear)))
@@ -151,7 +151,7 @@ def parse_config():
         
         comment_flag = " [COMMENT]" if is_comment else ""
         if debgg:
-            print(f"Line {line_num}{comment_flag}: idx={idx}, delim='{delimiter}', {len(values)} values → pos {start_pos}-{start_pos+step-1}")
+            print(f"Line {line_num}{comment_flag}: idx={idx}, delim='{delimiter}', {len(values)} values → pos {start_pos}-{start_pos+aadd-1}")
 
     # --- Write Output ---
     try:
@@ -160,7 +160,7 @@ def parse_config():
                 f.write(f"{i} {value}\n")
         
         print(f"\n✓ SUCCESS: {len(onear)} elements written to '{OUTFILE}'")
-        print(f"  Step size: {step}")
+        print(f"  Step size: {aadd}")
         print(f"  Debug mode: {'ON' if debgg else 'OFF'}")
         
     except IOError as e:
@@ -194,7 +194,7 @@ def oneget(q):
 #
 def compare_files(file_path1, file_path2):
     """
-    Compares two text files line by line, assuming each line is in the format 'index value' (e.g., '0 step').
+    Compares two text files line by line, assuming each line is in the format 'index value' (e.g., '0 aadd').
     Outputs 'equal' if the files are identical line by line.
     Otherwise, shows the differing lines with their indices.
     
@@ -249,7 +249,7 @@ def compare_files(file_path1, file_path2):
 
 # For your example data:
 # If you save the first list to 'file1.txt':
-# 0 step
+# 0 aadd
 # 1 step5
 # 2 5
 # 3 0
@@ -258,7 +258,7 @@ def compare_files(file_path1, file_path2):
 # 6 31-99
 
 # And the second to 'file2.txt':
-# 0 step
+# 0 aadd
 # 1 step5
 # 2 5
 # 3 0
@@ -288,7 +288,7 @@ def create_test_file():
 // ID | not_valid_line_key     kein index direct nach comment ignore line
 // ID   | KEY         | val1   | KEY2   | KEY3  |  KEY4 
 // ID   | KEY         | val1   | val2   | val3  |  val4 
-0 | step | step5      |  5     |0       |0      |0|0|0|    easy: 0,step ,step5 ,,,,
+0 | aadd | step5      |  5     |0       |0      |0|0|0|    easy: 0,aadd ,step5 ,,,,
 -->1     | range_user_1_arr_5 | 31-99  |1       |1      |1  | 1 | <!--      
 <!--2    , c_bg_2_array_10       ,#320a2b ,Color    , 2    ,2,2,2,2,2,
 -->3     | dbgg       | 1      | c_fg    | #cccccc | Color  | 3  |3 | 3 | 3 | 3  | | | | 5 comment /***/
@@ -301,7 +301,7 @@ def create_test_file():
 
 """
     test_out = """
-0 step
+0 aadd
 1 step5
 2 5
 3 0
